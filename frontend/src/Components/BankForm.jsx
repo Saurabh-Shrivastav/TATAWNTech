@@ -10,7 +10,7 @@ function BankForm() {
     e.preventDefault();
     const token = localStorage.getItem('token');
 
-    const response = await fetch('http://localhost:5000/save', {
+    const response = await fetch('https://tatawntech-g9is.onrender.com/save', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
