@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './SignUp.css'
+import './SignUp.css';
 
 const SignUp = ({ setIsAuthenticated }) => {
     const [email, setEmail] = useState('');
@@ -8,22 +8,48 @@ const SignUp = ({ setIsAuthenticated }) => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [phone, setMobile] = useState('');
     const [otp, setOtp] = useState('');
-    const [otpSent, setOtpSent] = useState('');
-    const [error, setError] = useState('');
+    const [otpSent, setOtpSent] = useState(false);
+    const [error, setError] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+
+    const validatePhoneNumber = (phone) => /^[6-9]\d{9}$/.test(phone); // Checks for Indian 10-digit mobile numbers starting with 6-9
 
     const handleSignup = async (e) => {
         e.preventDefault();
-        localStorage.setItem('userPhone',phone)
-        alert('Signup successful')
 
-        if (password !== confirmPassword) {
-            setError('Passwords do not match');
+        // Reset errors
+        setError({});
+
+        // Password length validation
+        if (password.length < 6 || password.length > 12) {
+            setError((prevError) => ({
+                ...prevError,
+                password: 'Password must be 6-12 characters long',
+            }));
             return;
         }
 
-        const mobileRegex = /^[6-9]\d{9}$/;
+        // Password match validation
+        if (password !== confirmPassword) {
+            setError((prevError) => ({
+                ...prevError,
+                confirmPassword: 'Passwords do not match',
+            }));
+            return;
+        }
 
+        // Phone number validation
+        if (!validatePhoneNumber(phone)) {
+            setError((prevError) => ({
+                ...prevError,
+                phone: 'Enter a valid 10-digit Indian mobile number',
+            }));
+            return;
+        }
+
+        // Show loading message
+        setIsLoading(true);
 
         try {
             const response = await fetch('https://tatawntech-g9is.onrender.com/signup', {
@@ -31,33 +57,28 @@ const SignUp = ({ setIsAuthenticated }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    email,
-                    password,
-                    confirmPassword,
-                    phone
-                }),
+                body: JSON.stringify({ email, password, phone }),
             });
 
             const data = await response.json();
-            console.log(data);
-
 
             if (response.ok) {
-                navigate('/signin');  // Redirect to login page after successful signup
+                navigate('/signin'); // Redirect to SignIn after successful signup
             } else {
-                setError(data.message || 'Error during signup');
+                setError({ general: data.message || 'Error during signup' });
             }
         } catch (err) {
-            setError('Something went wrong. Please try again.');
+            setError({ general: 'Something went wrong. Please try again.' });
+        } finally {
+            setIsLoading(false); // Hide loading message after submission
         }
     };
 
     return (
         <div className='signinContainer'>
             {!otpSent ? (
-
                 <form onSubmit={handleSignup}>
+                    {/* <h2>Add Bank Details</h2> */}
                     <input
                         type="email"
                         placeholder="Email"
@@ -65,8 +86,8 @@ const SignUp = ({ setIsAuthenticated }) => {
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
-
                     {error.email && <p style={{ color: 'red' }}>{error.email}</p>}
+
                     <input
                         type="text"
                         placeholder="Mobile number"
@@ -78,12 +99,13 @@ const SignUp = ({ setIsAuthenticated }) => {
 
                     <input
                         type="password"
-                        placeholder="Password"
+                        placeholder="Password (6-12 characters)"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
                     {error.password && <p style={{ color: 'red' }}>{error.password}</p>}
+
                     <input
                         type="password"
                         placeholder="Confirm Password"
@@ -93,8 +115,11 @@ const SignUp = ({ setIsAuthenticated }) => {
                     />
                     {error.confirmPassword && <p style={{ color: 'red' }}>{error.confirmPassword}</p>}
 
+                    <button type="submit" id='signup' disabled={isLoading}>
+                        {isLoading ? 'Loading...' : 'Signup'}
+                    </button>
 
-                    <button type="submit" id='signup'>Signup</button>
+                    {error.general && <p style={{ color: 'red' }}>{error.general}</p>}
                 </form>
             ) : (
                 <form>
@@ -109,13 +134,131 @@ const SignUp = ({ setIsAuthenticated }) => {
 
                     <button type='submit'>Verify OTP</button>
                 </form>
-            )
-
-            }
-
-
+            )}
         </div>
     );
 };
 
 export default SignUp;
+
+// import React, { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import './SignUp.css'
+
+// const SignUp = ({ setIsAuthenticated }) => {
+//     const [email, setEmail] = useState('');
+//     const [password, setPassword] = useState('');
+//     const [confirmPassword, setConfirmPassword] = useState('');
+//     const [phone, setMobile] = useState('');
+//     const [otp, setOtp] = useState('');
+//     const [otpSent, setOtpSent] = useState('');
+//     const [error, setError] = useState('');
+//     const navigate = useNavigate();
+
+//     const handleSignup = async (e) => {
+//         e.preventDefault();
+//         localStorage.setItem('userPhone',phone)
+//         alert('Signup successful')
+
+//         if (password !== confirmPassword) {
+//             setError('Passwords do not match');
+//             return;
+//         }
+
+//         const mobileRegex = /^[6-9]\d{9}$/;
+
+
+//         try {
+//             const response = await fetch('https://tatawntech-g9is.onrender.com/signup', {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/json',
+//                 },
+//                 body: JSON.stringify({
+//                     email,
+//                     password,
+//                     confirmPassword,
+//                     phone
+//                 }),
+//             });
+
+//             const data = await response.json();
+//             console.log(data);
+
+
+//             if (response.ok) {
+//                 navigate('/signin');  // Redirect to login page after successful signup
+//             } else {
+//                 setError(data.message || 'Error during signup');
+//             }
+//         } catch (err) {
+//             setError('Something went wrong. Please try again.');
+//         }
+//     };
+
+//     return (
+//         <div className='signinContainer'>
+//             {!otpSent ? (
+
+//                 <form onSubmit={handleSignup}>
+//                     <input
+//                         type="email"
+//                         placeholder="Email"
+//                         value={email}
+//                         onChange={(e) => setEmail(e.target.value)}
+//                         required
+//                     />
+
+//                     {error.email && <p style={{ color: 'red' }}>{error.email}</p>}
+//                     <input
+//                         type="text"
+//                         placeholder="Mobile number"
+//                         value={phone}
+//                         onChange={(e) => setMobile(e.target.value)}
+//                         required
+//                     />
+//                     {error.phone && <p style={{ color: 'red' }}>{error.phone}</p>}
+
+//                     <input
+//                         type="password"
+//                         placeholder="Password"
+//                         value={password}
+//                         onChange={(e) => setPassword(e.target.value)}
+//                         required
+//                     />
+//                     {error.password && <p style={{ color: 'red' }}>{error.password}</p>}
+//                     <input
+//                         type="password"
+//                         placeholder="Confirm Password"
+//                         value={confirmPassword}
+//                         onChange={(e) => setConfirmPassword(e.target.value)}
+//                         required
+//                     />
+//                     {error.confirmPassword && <p style={{ color: 'red' }}>{error.confirmPassword}</p>}
+
+
+//                     <button type="submit" id='signup'>Signup</button>
+//                 </form>
+//             ) : (
+//                 <form>
+//                     <input
+//                         type='text'
+//                         placeholder='Enter OTP'
+//                         value={otp}
+//                         onChange={(e) => setOtp(e.target.value)}
+//                         required
+//                     />
+//                     {error.otp && <p style={{ color: 'red' }}>{error.otp}</p>}
+
+//                     <button type='submit'>Verify OTP</button>
+//                 </form>
+//             )
+
+//             }
+
+
+//         </div>
+//     );
+// };
+
+// export default SignUp;
