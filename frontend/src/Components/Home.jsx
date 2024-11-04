@@ -47,36 +47,26 @@ function Home() {
                     <img src="/images/appLogo.jpeg" alt="" />
                 </div>
                 <div className="home_travel">
-                    {/* <a href="/"> */}
                     <div className="home_travel_item">
                         <div className="travel_item_head">
-                            <img src="https://heraeusinvest.in/static/wap/img/Recharge.png" alt="" />
+                            <img src="/images/recharge.webp" />
                         </div>
                         <button onClick={rechargeHandler} className="travel_item_cont">Recharge</ button>
                     </div>
-                    {/* </a> */}
-                    {/* <a href="/"> */}
+                    
                     <div className="home_travel_item">
                         <div className="travel_item_head">
-                            <img src="https://heraeusinvest.in/static/wap/img/Withdraw.png" alt="" />
+                            <img src="/images/withdraw.webp" />
                         </div>
                         <button onClick={withdrawHandler} className="travel_item_cont">Withdraw</button>
                     </div>
-                    {/* </a> */}
+                    
                     <div className="home_travel_item">
                         <div className="travel_item_head">
-                            <img src="https://heraeusinvest.in/static/wap/img/Account.png" alt="" />
+                            <img src="/images/bank.webp" />
                         </div>
                         <button onClick={addBankHandler} className="travel_item_cont">Bank</button>
                     </div>
-                    <a href="/">
-                        <div className="home_travel_item">
-                            <div className="travel_item_head">
-                                <img src="https://heraeusinvest.in/static/wap/img/Bills.png" alt="" />
-                            </div>
-                            <div className="travel_item_cont">Bill</div>
-                        </div>
-                    </a>
 
                 </div>
                 <div className="box-green">
