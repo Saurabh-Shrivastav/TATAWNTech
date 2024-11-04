@@ -84,7 +84,7 @@ const Recharge = () => {
                 gap: "10px",
                 marginBottom: "20px"
             }}>
-                {[200, 400, 1000, 2000, 5000, 10000, 20000, 50000, 100000].map((value) => (
+                {[500, 1600, 2600, 5200, 9300, 14352, 18590, 22000, 45000].map((value) => (
                     <button
                         key={value}
                         onClick={() => handleAmountClick(value)}
