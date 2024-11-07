@@ -3,6 +3,7 @@ body {
     padding: 0;
     font-family: Arial, sans-serif;
     background: #e2f2ff;
+    overflow-x: hidden;
 }
 
 header {
@@ -35,6 +36,7 @@ main {
     padding: 15px;
     height: calc(100vh - 54px - 70px);
     overflow-y: auto;
+    margin-bottom: 1rem;
 }
 
 .team-yq {
@@ -316,4 +318,17 @@ footer nav ul li a {
 footer nav ul li .active {
     background: #168fe1;
     color: #fff;
+}
+
+@media (max-width: 768px){
+
+    body{
+        overflow-x: hidden;
+    }
+    
+    #main{
+        margin-left: 100px;
+        width: 68%;
+        margin-bottom: 2rem;
+    }
 }
