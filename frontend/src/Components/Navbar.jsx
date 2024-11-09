@@ -24,7 +24,7 @@ function Navbar() {
                     <NavLink to="/team" className={({ isActive }) => isActive ? 'active-link' : ""}>Team</NavLink>
                 </li>
                 <li>
-                    <NavLink to="/my" className={({ isActive }) => isActive ? 'active-link' : ""}>My</NavLink>
+                    <NavLink to="/my" className={({ isActive }) => isActive ? 'active-link' : ""}>Profile</NavLink>
                 </li>
             </ul>
         </>
