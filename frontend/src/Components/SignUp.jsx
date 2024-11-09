@@ -11,6 +11,7 @@ const SignUp = ({ setIsAuthenticated }) => {
     const [otpSent, setOtpSent] = useState(false);
     const [error, setError] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [showPasswords, setShowPasswords] = useState(false); 
     const navigate = useNavigate();
 
     const validatePhoneNumber = (phone) => /^[6-9]\d{9}$/.test(phone); // Checks for Indian 10-digit mobile numbers starting with 6-9
@@ -98,7 +99,7 @@ const SignUp = ({ setIsAuthenticated }) => {
                     {error.phone && <p style={{ color: 'red' }}>{error.phone}</p>}
 
                     <input
-                        type="password"
+                        type={showPasswords ? "text" : "password"}
                         placeholder="Password (6-12 characters)"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -107,13 +108,21 @@ const SignUp = ({ setIsAuthenticated }) => {
                     {error.password && <p style={{ color: 'red' }}>{error.password}</p>}
 
                     <input
-                        type="password"
+                        type={showPasswords ? "text" : "password"}
                         placeholder="Confirm Password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
                     />
                     {error.confirmPassword && <p style={{ color: 'red' }}>{error.confirmPassword}</p>}
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            checked={showPasswords}
+                            onChange={() => setShowPasswords(!showPasswords)}
+                        /> Show Passwords
+                    </label>
 
                     <button type="submit" id='signup' disabled={isLoading}>
                         {isLoading ? 'Loading...' : 'Signup'}
