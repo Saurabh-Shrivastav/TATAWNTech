@@ -14,7 +14,7 @@ const TeamComponent = () => {
   return (
     <>
       <header>
-        <div className="header-title">Team</div>
+        <div className="header-title">Team.</div>
         <div className="header-icon"></div>
       </header>
 
