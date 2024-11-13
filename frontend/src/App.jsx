@@ -29,7 +29,10 @@ import GoodsDetail9 from './Components/GoodsDetail9';
 import Recharge from './Components/Recharge'
 import Withdraw from './Components/Withdrawal';
 import BankForm from './Components/BankForm';
-
+import Payment from './Components/Payment';
+import EventProduct from './Components/EventProduct';
+import GoodDetail10 from './Components/GoodDetail10';
+import GoodDetail11 from './Components/GoodDetail11';
 
 // const router = createBrowserRouter([
 //   {
@@ -141,6 +144,24 @@ function App() {
       vipDays: 33,
       dayIncome: 2200.00,
       totalIncome: 72600,
+    },
+    {
+      events: [{
+        vipName: "VIP1",
+        vipPrice: 5000,
+        vipDays: 17,
+        dayIncome: 500.00,
+        totalIncome: 8500,
+      },
+      {
+        vipName: "VIP2",
+        vipPrice: 8000,
+        vipDays: 20,
+        dayIncome: 630.00,
+        totalIncome: 12600,
+      }
+
+      ]
     }
 
   ]
@@ -196,9 +217,14 @@ function App() {
                 <Route path='/gooddetail7' element={< GoodsDetail7 />} />
                 <Route path='/gooddetail8' element={< GoodsDetail8 />} />
                 <Route path='/gooddetail9' element={< GoodsDetail9 />} />
+                <Route path='/events-page1' element={< GoodDetail10 />} />
+                <Route path='/gooddetail11' element={< GoodDetail11 />} />
                 <Route path='/recharge' element={< Recharge />} />
                 <Route path='/withdraw' element={< Withdraw />} />
                 <Route path='/addBank' element={< BankForm />} />
+                <Route path='/forgotPassword' element={< ForgotPassword />} />
+                <Route path='/payment' element={< Payment />} />
+                <Route path='/events' element={< EventProduct />} />
               </>
             ) : (
               <>
